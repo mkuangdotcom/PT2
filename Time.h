@@ -33,21 +33,25 @@ bool validDate(int day, int month, int year) {
         return false;
     }
     if (day < 1 || day > 31) {
+        cout << "INVALID DAY\n";
         return false;
     }
     if (month == 2) {
         if (year % 4 == 0) {
             if (day > 29) {
+                cout << "INVALID MONTH\n";
                 return false;
             }
         } else {
             if (day > 28) {
+                cout << "INVALID MONTH\n";
                 return false;
             }
         }
     }
     if (month == 4 || month == 6 || month == 9 || month == 11) {
         if (day > 30) {
+            cout << "INVALID MONTH\n";
             return false;
         }
     }
