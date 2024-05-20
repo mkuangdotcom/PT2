@@ -15,12 +15,17 @@ class Time {
 
 
     public:
-        Time(int sday = 0, int smonth = 0, int syear = 0, int eday = 0, int emonth = 0, int eyear = 0);
+        Time(int sday = 0, int smonth = 0, int syear = 0, int eday = 0, int emonth = 0, int eyear = 0, int stime = 0, int etime = 0);
         void setStartDate(int _sday, int _smonth, int _syear) { sday = _sday; smonth = _smonth; syear = _syear; }
         void setEndDate(int _eday, int _emonth, int _eyear) { eday = _eday; emonth = _emonth; eyear = _eyear; }
 
         friend bool validDate(int day, int month, int year);
 
+
+        void setStartTime(int _stime) { stime = _stime; }
+        void setEndTime(int _etime) { etime = _etime; }
+
+        friend bool validTime(int time) ;
 };
 
 bool validDate(int day, int month, int year) {
@@ -58,8 +63,13 @@ bool validDate(int day, int month, int year) {
     return true;
 }
 
-
-
+bool validTime(int time) {
+    if (time < 0 || time > 2400) {
+        cout << "INVALID TIME\n";
+        return false;
+    }
+    return true;
+}
 
 #endif 
 
