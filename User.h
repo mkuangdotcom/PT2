@@ -30,7 +30,6 @@ class User {
         void setWeight(double _weight) { weight = _weight; }
         void setBMI() { BMI = weight / pow(height, 2); }
 
-
 };
 
 #endif
