@@ -12,65 +12,21 @@ class Time {
         int eday, emonth, eyear;
         int dday, dmonth, dyear;
 
-        int stime, etime;
+        int shour, sminute, ehour, eminute;
 
 
     public:
         Time(int sday = 0, int smonth = 0, int syear = 0, int eday = 0, int emonth = 0, int eyear = 0, int stime = 0, int etime = 0);
         void setStartDate(int _sday, int _smonth, int _syear) { sday = _sday; smonth = _smonth; syear = _syear; }
         void setEndDate(int _eday, int _emonth, int _eyear) { eday = _eday; emonth = _emonth; eyear = _eyear; }
-       bool validE () {
-            if (eyear < syear) {
-                cout << "INVALID YEAR\n";
-                return false;
-            }
-            if (eyear == syear) {
-                if (emonth < smonth) {
-                    cout << "INVALID MONTH\n";
-                    return false;
-                }
-                if (emonth == smonth) {
-                    if (eday < sday) {
-                        cout << "INVALID DAY\n";
-                        return false;
-                    }
-                }
-            } else if (eyear > syear) {
-                if (emonth < smonth) {
-                    cout << "INVALID MONTH\n";
-                    return false;
-                } else if (emonth == smonth) {
-                    if (eday < sday) {
-                        cout << "INVALID DAY\n";
-                        return false;
-                    }
-                }
-            }
-            return true;
-        }
-            /*if (emonth < smonth) {
-                cout << "INVALID MONTH\n";
-                return false;
-            }
-            if (eday < sday) {
-                cout << "INVALID DAY\n";
-                return false;
-            }
-            return true;
-        }*/
-    
-
         friend bool validDate(int day, int month, int year);
-        friend bool diffDate(Time t1, Time t2);
+        friend bool validEdate(int eday, int emonth, int eyear, int sday, int smonth, int syear);
+        void diffDate();
 
 
-        void setStartTime(int _stime) { stime = _stime; }
-        void setEndTime(int _etime) { etime = _etime; }
-        /*bool operator> (Time t) {
-            this->etime > t.stime;
-        }; */
-
-        friend bool validTime(int sday, int smonth, int syear, int eday, int emonth, int eyear); ;
+        void setStartTime(int _shour, int _sminute) { shour = _shour, sminute = _sminute; }
+        void setEndTime(int _ehour, int _eminute) { ehour = _ehour, eminute = _eminute; }
+        friend bool validTime(int hour, int minute);
 };
 
 bool validDate(int day, int month, int year) {
@@ -108,20 +64,54 @@ bool validDate(int day, int month, int year) {
     return true;
 }
 
-bool validTime(int time) {
-    if (time < 0 || time > 2400) {
-        cout << "INVALID TIME\n";
+
+bool validEdate (int eday, int emonth, int eyear, int sday, int smonth, int syear) {
+    if (eyear < syear) {
+        cout << "INVALID YEAR\n";
         return false;
+    }
+    if (eyear == syear) {
+        if (emonth < smonth) {
+            cout << "INVALID MONTH\n";
+            return false;
+        }
+        if (emonth == smonth) {
+            if (eday < sday) {
+                cout << "INVALID DAY\n";
+                return false;
+            }
+        }
+    } else if (eyear > syear) {
+        if (emonth < smonth) {
+            cout << "INVALID MONTH\n";
+            return false;
+        } else if (emonth == smonth) {
+            if (eday < sday) {
+                cout << "INVALID DAY\n";
+                return false;
+            }
+        }
     }
     return true;
 }
 
-int diffTime(int sday, int smonth, int syear, int eday, int emonth, int eyear) {
-    if (eyear < syear) {
+void Time :: diffDate() {
+    dyear = eyear - syear;
+    dmonth = emonth - smonth;
+    dday = eday - sday;
+}
 
-        return true;
+
+bool validTime(int hour, int minute) {
+    if (hour < 0 || hour > 23) {
+        cout << "INVALID HOUR\n";
+        return false;
     }
-    return false;
+    if (minute < 0 || minute > 59) {
+        cout << "INVALID MINUTE\n";
+        return false;
+    }
+    return true;
 }
 
 #endif 
