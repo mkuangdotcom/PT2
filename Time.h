@@ -10,6 +10,7 @@ class Time {
     private:
         int sday, smonth, syear; 
         int eday, emonth, eyear;
+        int dday, dmonth, dyear;
 
         int stime, etime;
 
@@ -18,14 +19,35 @@ class Time {
         Time(int sday = 0, int smonth = 0, int syear = 0, int eday = 0, int emonth = 0, int eyear = 0, int stime = 0, int etime = 0);
         void setStartDate(int _sday, int _smonth, int _syear) { sday = _sday; smonth = _smonth; syear = _syear; }
         void setEndDate(int _eday, int _emonth, int _eyear) { eday = _eday; emonth = _emonth; eyear = _eyear; }
+        bool validE () {
+            if (eyear < syear) {
+                cout << "INVALID YEAR\n";
+                return false;
+            }
+            if 
+            if (emonth < smonth) {
+                cout << "INVALID MONTH\n";
+                return false;
+            }
+            if (eday < sday) {
+                cout << "INVALID DAY\n";
+                return false;
+            }
+            return true;
+        }
+    
 
         friend bool validDate(int day, int month, int year);
+        friend bool diffDate(Time t1, Time t2);
 
 
         void setStartTime(int _stime) { stime = _stime; }
         void setEndTime(int _etime) { etime = _etime; }
+        /*bool operator> (Time t) {
+            this->etime > t.stime;
+        }; */
 
-        friend bool validTime(int time) ;
+        friend bool validTime(int sday, int smonth, int syear, int eday, int emonth, int eyear); ;
 };
 
 bool validDate(int day, int month, int year) {
@@ -69,6 +91,14 @@ bool validTime(int time) {
         return false;
     }
     return true;
+}
+
+int diffTime(int sday, int smonth, int syear, int eday, int emonth, int eyear) {
+    if (eyear < syear) {
+
+        return true;
+    }
+    return false;
 }
 
 #endif 
