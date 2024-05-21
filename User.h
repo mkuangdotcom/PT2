@@ -35,7 +35,7 @@ class newUser : public User {       // Inheritance - extended from User class.
 
     public:
         newUser(string _name = "", int _age = 0, char _gender = ' ', double _height = 0, double _weight = 0, double _BMI = 0) : 
-        User(username, password), name(_name), age(_age), gender(_gender), height(_height), weight(_weight), BMI(_BMI) {};
+        User("",""), name(_name), age(_age), gender(_gender), height(_height), weight(_weight), BMI(_BMI) {};
 
         string getName() { return name; }
         int getAge() { return age; }
