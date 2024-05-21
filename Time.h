@@ -19,13 +19,36 @@ class Time {
         Time(int sday = 0, int smonth = 0, int syear = 0, int eday = 0, int emonth = 0, int eyear = 0, int stime = 0, int etime = 0);
         void setStartDate(int _sday, int _smonth, int _syear) { sday = _sday; smonth = _smonth; syear = _syear; }
         void setEndDate(int _eday, int _emonth, int _eyear) { eday = _eday; emonth = _emonth; eyear = _eyear; }
-        bool validE () {
+       bool validE () {
             if (eyear < syear) {
                 cout << "INVALID YEAR\n";
                 return false;
             }
-            if 
-            if (emonth < smonth) {
+            if (eyear == syear) {
+                if (emonth < smonth) {
+                    cout << "INVALID MONTH\n";
+                    return false;
+                }
+                if (emonth == smonth) {
+                    if (eday < sday) {
+                        cout << "INVALID DAY\n";
+                        return false;
+                    }
+                }
+            } else if (eyear > syear) {
+                if (emonth < smonth) {
+                    cout << "INVALID MONTH\n";
+                    return false;
+                } else if (emonth == smonth) {
+                    if (eday < sday) {
+                        cout << "INVALID DAY\n";
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
+            /*if (emonth < smonth) {
                 cout << "INVALID MONTH\n";
                 return false;
             }
@@ -34,7 +57,7 @@ class Time {
                 return false;
             }
             return true;
-        }
+        }*/
     
 
         friend bool validDate(int day, int month, int year);
