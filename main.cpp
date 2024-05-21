@@ -12,7 +12,7 @@
 using namespace std;
 
 int main() {    
-    string username, password;
+    string username, password, password2;
 
 
     map<string, User> users;        // Map to store all users
@@ -29,8 +29,16 @@ int main() {
     if (userType == '1') {
         cout << "Enter username: ";
         cin >> username;
-        cout << "Enter password: ";
-        cin >> password;
+        do {
+            cout << "Enter password: ";
+            cin >> password;
+        } while (!checkPassword(password));
+    
+        do { 
+            cout << "Please re-enter password: ";
+            cin >> password2;
+        
+        } while (!samePassword(password, password2));   
 
         User newUser(username, password);       // Create a new User object
         users["username"] = newUser;    // Add the new user to the map
