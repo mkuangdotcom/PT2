@@ -7,22 +7,27 @@
 #include <string>
 #include <cmath>
 #include <iomanip>
-
+#include <fstream>  // To store data in a file
 #include <map>      // STL map
 using namespace std;
 
 int main() {    
     string username, password, password2;
+    char userType;
 
 
     map<string, User> users;        // Map to store all users
 
-
-    char userType;
-    cout << left << setw(15) << "Welcome to Dream Catcher: " << endl;
-    cout << left << setw(15) << "Please select the user type: " << endl;
-    cout << left << setw(15) << "1. New User" << endl;
-    cout << left << setw(15) << "2. Existing User" << endl;
+    ifstream inFile("users.txt");
+    while (inFile >> username >> password) {
+        users[username] = User(username, password);
+    }
+    inFile.close();
+    
+    cout << "Welcome to Dream Catcher: " << endl;
+    cout << "Please select the user type: " << endl;
+    cout << "1. New User" << endl;
+    cout << "2. Existing User" << endl;
     cin >> userType;
 
     // 1. New user
@@ -42,6 +47,11 @@ int main() {
 
         User newUser(username, password);       // Create a new User object
         users["username"] = newUser;    // Add the new user to the map
+
+        // Save the new user to file
+        ofstream outFile("users.txt", ios::app);
+        outFile << username << " " << password << "\n";
+        outFile.close();
         
         // 2. Existing user
     } else if (userType == '2') {
