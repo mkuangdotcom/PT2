@@ -3,6 +3,7 @@
 #include "Data.h"
 
 
+
 #include <iostream>
 #include <string>
 #include <cmath>
@@ -11,6 +12,7 @@
 #include <map>      // STL map
 #include <exception>
 #include <stdexcept>
+#include <unistd.h>     // For sleep function
 using namespace std;
 
 
@@ -21,7 +23,7 @@ void printLines() {
     cout << endl;
 }
 
-// Login Page
+//! Login Page
 void loginPage() {
     printLines();
     cout << setw(62) << "Welcome to Dream Catcher: " << endl;
@@ -29,7 +31,7 @@ void loginPage() {
     cout << "Please select the user type: " << "\t\t1 - New User" << "\t\t2 - Existing User\t\t";
 }
 
-// New User Page
+//! New User Page
 void newUserPage(map<string, User>& users) {
     string username, password, password2, name;
     int age;
@@ -52,7 +54,7 @@ void newUserPage(map<string, User>& users) {
                 break;
 
             } catch (std::invalid_argument&) {
-                cout << "Invalid password. Password must be at least 8 characters long! \n";
+                cout << "Invalid password. Password must be at least 8 characters long! " << endl;
                 continue;
             }
         }
@@ -66,7 +68,7 @@ void newUserPage(map<string, User>& users) {
                 break; 
             } 
             catch (std::invalid_argument&) {
-                cout << "Invalid password. Both passwords does not match! \n";
+                cout << "Invalid password. Both passwords does not match! " << endl;
             }
         }
 
@@ -106,6 +108,7 @@ void newUserPage(map<string, User>& users) {
         outFile.close();
 }
 
+//! Existing User Page
 void existingUser(map<string, User>& users) {
     string username, password;
 
@@ -116,7 +119,7 @@ void existingUser(map<string, User>& users) {
     cin >> username;
 
     if (users.find(username) == users.end()) {  
-        cout << "User does not exist\n";
+        cout << "User does not exist" << endl;
     } else {
         while (true) {
             try {
@@ -134,12 +137,47 @@ void existingUser(map<string, User>& users) {
                 break;
                 
             } catch (std::invalid_argument&) {
-                cout << "Incorrect password, Please try again\n";
+                cout << "Incorrect password, Please try again" << endl;
             }
         }
     }
 }
 
+//! Main Menu Page
+void mainMenu() {
+    int Menu;
+
+    cout << endl << endl << endl;
+    printLines();
+    cout << setw(52) << "MAIN MENU: " << endl;
+    printLines();
+
+    cout << "Please select an option: " << endl;
+    cout << "\t\t1 - Sleep Analyzer" << endl;
+    cout << "\t\t2 - Sleep Symphony" << endl;
+    cout << "\t\t3 - Quit Program" << endl << endl;
+    cout << "Enter your choice: ";
+    cin >> Menu;
+    printLines();
+
+    switch(Menu) {
+        case 1:
+            cout << "Sleep Analyzer" << endl;
+            break;
+        case 2:
+            cout << "Sleep Symphony" << endl;
+            break;
+        case 3:
+            cout << "Quitting Program" << endl;
+            break;
+    
+    }
+
+
+
+
+
+}
 
 
 
@@ -181,6 +219,11 @@ int main() {
             existingUser(users);
         
 
+
+        cout << endl << "Please wait while we redirect you to the main menu..." << endl;
+        sleep(3);
+
+        mainMenu();
 
             
 
