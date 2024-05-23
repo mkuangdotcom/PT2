@@ -76,12 +76,7 @@ void newUserPage(map<string, User>& users) {
         cout << "Before we proceed further. Please provide some personal information. Thank You! " << endl;
         cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl;
 
-
-        // Create a new User object
         NewUser newUser(username, password);  
-
-        // Add the new user to the map
-        users["username"] = newUser;   
 
         cout << "Name\t\t: ";
         cin.ignore();
@@ -104,32 +99,67 @@ void newUserPage(map<string, User>& users) {
         newUser.setGender(gender);
         newUser.setHeight(height);
         newUser.setWeight(weight);
+        users[username] = newUser;   
 
         ofstream outFile("users.txt", ios::app);
         outFile << username << " " << password << " " << name << " " << age << " " << gender << " " << height << " " << weight << endl;
         outFile.close();
+}
 
+void existingUser(map<string, User>& users) {
+    string username, password;
+
+    printLines();
+    cout << setw(52) << "LOGIN: " << endl;
+
+    cout << "Enter username: ";
+    cin >> username;
+
+    if (users.find(username) == users.end()) {  
+        cout << "User does not exist\n";
+    } else {
+        while (true) {
+            try {
+                cout << "Enter password: ";
+                cin >> password;
+
+                if (users[username].getPassword() != password) {
+                    throw std::invalid_argument("Incorrect password");
+                }
+
+                cout << endl;
+                cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl;
+                cout << "Welcome back to Dream Catcher!\t" << username << endl;
+                cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl;
+                break;
+                
+            } catch (std::invalid_argument&) {
+                cout << "Incorrect password, Please try again\n";
+            }
+        }
+    }
 }
 
 
 
 
 
-
-
 int main() {    
-    string username, password, password2;
+    string username, password, password2, name;
     char userType;
-    string name;
     int age;
     char gender;
-    double height;
-    double weight;
+    double height, weight;
 
     // Map to store all users
     map<string, User> users;        
 
     ifstream inFile("users.txt");
+    if (!inFile) {
+        cout << "Unable to open file";
+        return 1; 
+    }
+
     while (inFile >> username >> password >> name >> age >> gender >> height >> weight) {
         NewUser user(username, password);
         user.setName(name);
@@ -144,107 +174,15 @@ int main() {
     loginPage();
     cin >> userType;
 
-        // 1. New user
-        if (userType == '1') {
+        if (userType == '1') 
             newUserPage(users);
-        /*cout << "Enter username: ";
-        cin >> username;
-        NewUser tempUser(username, ""); 
-
-            while (true) {
-                try {
-                    cout << "Enter password: ";
-                    cin >> password;
-                    tempUser.checkPassword(password);
-
-                    break;
-
-                } catch (std::invalid_argument&) {
-                    cout << "Invalid password. Password must be at least 8 characters long! \n";
-                    continue;
-                }
-            }
-
-            while (true) {
-                try {
-                    cout << "Please re-enter password: ";
-                    cin >> password2;
-                    tempUser.samePassword(password, password2);   
-
-                    break; 
-                } 
-                catch (std::invalid_argument&) {
-                    cout << "Invalid password. Both passwords does not match! \n";
-                }
-            }
-
-
-
-            // Create a new User object
-            NewUser newUser(username, password);  
-
-            // Add the new user to the map
-            users["username"] = newUser;   
-
-            cout << endl << endl << endl;
-            cout << "----------------------------------------------------------------- " << endl;
-            cout << "            Welcome to Dream Catcher! " << username << endl;
-            cout << "----------------------------------------------------------------- " << endl;
-            cout << "Please enter your personal information: " << endl;
-
-            cout << "Name: ";
-            cin.ignore();
-            getline(cin, name);
-
-            cout << "Age: ";
-            cin >> age;
-
-            cout << "Gender (M - Male, F - Female): ";
-            cin >> gender;
-
-            cout << "Height (m): ";
-            cin >> height;
-
-            cout << "Weight (kg): ";
-            cin >> weight;
-
-            newUser.setName(name);
-            newUser.setAge(age);
-            newUser.setGender(gender);
-            newUser.setHeight(height);
-            newUser.setWeight(weight);
-
-            ofstream outFile("users.txt", ios::app);
-            outFile << username << " " << password << " " << name << " " << age << " " << gender << " " << height << " " << weight << endl;
-            outFile.close();*/
-
-        
             
-        }   // 2. Existing user
-        else if (userType == '2') {
-            cout << "Enter username: ";
-            cin >> username;
+        else if (userType == '2') 
+            existingUser(users);
+        
 
-            if (users.find(username) == users.end()) {  
-                cout << "User does not exist\n";
-            } else {
-                while (true) {
-                    try {
-                    cout << "Enter password: ";
-                    cin >> password;
 
-                    if (users[username].getPassword() != password) {
-                        throw std::invalid_argument("Incorrect password");
-                    }
-
-                    cout << "Welcome Back! " << username << endl;
-                    break;
-                } catch (std::invalid_argument&) {
-                    cout << "Incorrect password, Please try again\n";
-                }
-            }
-        }
-    }
+            
 
     return 0;
 }
