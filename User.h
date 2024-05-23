@@ -1,10 +1,13 @@
 #include <iostream>
 #include <cmath>
 #include <string>
+#include <stdexcept> // for std::invalid_argument
 using namespace std;
 
 #ifndef USER_H
 #define USER_H
+
+class Data;
 
 class User {
     protected:
@@ -18,13 +21,10 @@ class User {
         void setPassword(string _password) { password = _password; }
         string getUsername() { return username; }
         string getPassword() { return password; }
-        friend bool checkPassword(string _password);        // Checks whether password is at least 8 characters long
-        friend bool samePassword(string _password, string _password2);      // Checks whether the two passwords match
-        
 
 };
 
-class newUser : public User {       // Inheritance - extended from User class.
+class NewUser : public User {       // Inheritance - extended from User class.
     private:
         string name;
         int age;
@@ -34,8 +34,15 @@ class newUser : public User {       // Inheritance - extended from User class.
         double BMI;
 
     public:
-        newUser(string _name = "", int _age = 0, char _gender = ' ', double _height = 0, double _weight = 0, double _BMI = 0) : 
-        User("",""), name(_name), age(_age), gender(_gender), height(_height), weight(_weight), BMI(_BMI) {};
+        NewUser(string _username = "", string _password = "") : User(_username, _password)  {
+            name = "";
+            age = 0;
+            gender = ' ';
+            height = 0;
+            weight = 0;
+            BMI = 0;
+        } 
+
 
         string getName() { return name; }
         int getAge() { return age; }
@@ -51,24 +58,28 @@ class newUser : public User {       // Inheritance - extended from User class.
         void setWeight(double _weight) { weight = _weight; }
         void calcBMI() { BMI = weight / pow(height, 2); }
 
+        void checkPassword(const std::string& password) {
+            if (password.length() < 8) {
+                throw std::invalid_argument("Password must be at least 8 characters long! ");
+            }
+        }
+
+        void samePassword(const std::string& password1, const std::string& password2) {
+            if (password1 != password2) {
+                throw std::invalid_argument("Passwords do not match! ");
+            }
+        }
+
+        /*void checkUser(const std::string& username) {
+            if (username.length() < 8) {
+                throw std::invalid_argument("Username must be at least 8 characters long! ");
+            }
+        }*/
+
+
 };
 
-bool checkPassword(string _password) {
-    if (_password.length() < 8) {
-        cout << "Password must be at least 8 characters long\n";
-        return false;
-    }
-    return true;
-}
-
-bool samePassword(string _password, string _password2) {
-    if (_password != _password2) {
-        cout << "Passwords do not match\n";
-        return false;
-    }
-    return true;
-}
-
-
+    
+ 
 
 #endif
