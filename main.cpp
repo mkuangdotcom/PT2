@@ -90,8 +90,7 @@ void newUserPage(map<string, User>& users) {
         cout << "Age\t\t: ";
         cin >> age;
 
-        cout << "(M - Male, F - Female)" << endl;
-        cout << "Gender\t\t: ";
+        cout << "Gender (M/F)\t: ";
         cin >> gender;
 
         cout << "Height (m)\t: ";
