@@ -14,7 +14,7 @@ class NewUser : public User {       // Inheritance - extended from User class.
         char gender;
         double height;
         double weight;
-        double BMI;
+
 
     public:
         NewUser(string _username = "", string _password = "") : User(_username, _password)  {
@@ -23,7 +23,6 @@ class NewUser : public User {       // Inheritance - extended from User class.
             gender = ' ';
             height = 0;
             weight = 0;
-            BMI = 0;
         } 
 
 
@@ -32,14 +31,12 @@ class NewUser : public User {       // Inheritance - extended from User class.
         char getGender() {return gender; }
         double getHeight() { return height; }
         double getWeight() { return weight; }
-        double getBMI() { return BMI; }
 
         void setName(string _name) { name = _name; }
         void setAge(int _age) { age = _age; }
         void setGender(char a) { gender = a; }
         void setHeight(double _height) { height = _height; }
         void setWeight(double _weight) { weight = _weight; }
-        void calcBMI() { BMI = weight / pow(height, 2); }
 
         void checkPassword(const std::string& password) {
             if (password.length() < 8) {
