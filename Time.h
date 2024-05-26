@@ -8,25 +8,27 @@ using namespace std;
 
 class Time {
     private:
-        int sday, smonth, syear; 
-        int eday, emonth, eyear;
-        int dday, dmonth, dyear;
+        int day;
 
         int shour, sminute, ehour, eminute;
 
 
     public:
-        Time(int sday = 0, int smonth = 0, int syear = 0, int eday = 0, int emonth = 0, int eyear = 0, int stime = 0, int etime = 0);
-        void setStartDate(int _sday, int _smonth, int _syear) { sday = _sday; smonth = _smonth; syear = _syear; }
-        void setEndDate(int _eday, int _emonth, int _eyear) { eday = _eday; emonth = _emonth; eyear = _eyear; }
+        Time(int _day = 0, int _shour = 0, int _sminute = 0, int _ehour = 0, int _eminute = 0) : day(_day), shour(_shour), sminute(_sminute), ehour(_ehour), eminute(_eminute) { };
+        void setDay(int _day) { day = _day; }
+        int getDay() { return day; }
         friend bool validDate(int day, int month, int year);
         friend bool validEdate(int eday, int emonth, int eyear, int sday, int smonth, int syear);
-        void diffDate();
-
 
         void setStartTime(int _shour, int _sminute) { shour = _shour, sminute = _sminute; }
         void setEndTime(int _ehour, int _eminute) { ehour = _ehour, eminute = _eminute; }
-        friend bool validTime(int hour, int minute);
+        int getStartHour() { return shour; }
+        int getStartMinute() { return sminute; }
+        int getEndHour() { return ehour; }
+        int getEndMinute() { return eminute; }
+        bool validTime(int hour, int minute);
+        int dailySleepTime();
+        int averageSleepTime();
 };
 
 bool validDate(int day, int month, int year) {
@@ -95,12 +97,6 @@ bool validEdate (int eday, int emonth, int eyear, int sday, int smonth, int syea
     return true;
 }
 
-void Time :: diffDate() {
-    dyear = eyear - syear;
-    dmonth = emonth - smonth;
-    dday = eday - sday;
-}
-
 
 bool validTime(int hour, int minute) {
     if (hour < 0 || hour > 23) {
@@ -114,6 +110,46 @@ bool validTime(int hour, int minute) {
     return true;
 }
 
+int Time::dailySleepTime() {
+    int totalSleepMinutes = 0;
+
+    for (int i = 0; i < getDay(); i++) {
+        int shour, sminute, ehour, eminute;
+
+        do {
+            std::cout << "Enter the start sleep time for day " << (i + 1) << " (hour and minute): ";
+            std::cin >> shour >> sminute;
+        } while (!validTime(shour, sminute));
+
+        do {
+            std::cout << "Enter the end sleep time for day " << (i + 1) << " (hour and minute): ";
+            std::cin >> ehour >> eminute;
+        } while (!validTime(ehour, eminute));
+
+        setStartTime(shour, sminute);
+        setEndTime(ehour, eminute);
+
+        int startMinutes = getStartHour() * 60 + getStartMinute();
+        int endMinutes = getEndHour() * 60 + getEndMinute();
+
+        // If the end time is less than the start time, it means the sleep period extended to the next day
+        if (endMinutes < startMinutes) {
+            endMinutes += 24 * 60;
+        }
+
+        totalSleepMinutes += endMinutes - startMinutes;
+    }
+
+    return totalSleepMinutes;
+}
+
+int Time::averageSleepTime() {
+    int totalSleepMinutes = dailySleepTime();
+    int averageSleepMinutes = totalSleepMinutes / getDay();
+
+    return averageSleepMinutes;
+}
+ 
 
 
 #endif 

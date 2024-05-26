@@ -170,7 +170,6 @@ void mainMenu() {
         case 3:
             cout << "Quitting Program" << endl;
             break;
-    
     }
 
 

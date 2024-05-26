@@ -7,7 +7,7 @@ using namespace std;
 #ifndef NEWUSER_H
 #define NEWUSER_H
 
-class NewUser : public User {       // Inheritance - extended from User class.
+class NewUser : public User {      
     private:
         string name;
         int age;
