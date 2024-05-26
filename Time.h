@@ -8,15 +8,11 @@ using namespace std;
 
 class Time {
     private:
-        int day;
-
         int shour, sminute, ehour, eminute;
 
-
     public:
-        Time(int _day = 0, int _shour = 0, int _sminute = 0, int _ehour = 0, int _eminute = 0) : day(_day), shour(_shour), sminute(_sminute), ehour(_ehour), eminute(_eminute) { };
-        void setDay(int _day) { day = _day; }
-        int getDay() { return day; }
+        Time(int _shour = 0, int _sminute = 0, int _ehour = 0, int _eminute = 0) : shour(_shour), sminute(_sminute), ehour(_ehour), eminute(_eminute) { };
+
         friend bool validDate(int day, int month, int year);
         friend bool validEdate(int eday, int emonth, int eyear, int sday, int smonth, int syear);
 
@@ -27,8 +23,8 @@ class Time {
         int getEndHour() { return ehour; }
         int getEndMinute() { return eminute; }
         bool validTime(int hour, int minute);
-        int dailySleepTime();
-        int averageSleepTime();
+        int dailySleepTime(int);
+        int averageSleepTime(int);
 };
 
 bool validDate(int day, int month, int year) {
@@ -110,11 +106,12 @@ bool Time::validTime(int hour, int minute) {
     return true;
 }
 
-int Time::dailySleepTime() {
+int Time::dailySleepTime(int day) {
     int totalSleepMinutes = 0;
 
-    for (int i = 0; i < getDay(); i++) {
+    for (int i = 0; i < day; i++) {
         int shour, sminute, ehour, eminute;
+        cout << "Day " << (i + 1) << ": ";
 
         do {
             std::cout << "Enter the start sleep time for day " << (i + 1) << " (hour and minute): ";
@@ -143,9 +140,9 @@ int Time::dailySleepTime() {
     return totalSleepMinutes;
 }
 
-int Time::averageSleepTime() {
-    int totalSleepMinutes = dailySleepTime();
-    int averageSleepMinutes = totalSleepMinutes / getDay();
+int Time::averageSleepTime(int day) {
+    int totalSleepMinutes = dailySleepTime(day);
+    int averageSleepMinutes = totalSleepMinutes / day ;
 
     return averageSleepMinutes;
 }

@@ -21,15 +21,15 @@ class Data {
         char getCategory() { return category; }
 
 
-        void analyzeSleep();
+        void analyzeSleep(int);
         void displayMessage();
-        void calculateSleepDiff();
+        void calculateSleepDiff(int );
 };
 
 
-void Data::analyzeSleep() {
+void Data::analyzeSleep(int day) {
      Time timeInstance;
-        double averageSleep = timeInstance.averageSleepTime(); // averageSleep is in minutes
+        int averageSleep = timeInstance.averageSleepTime(day); // averageSleep is in minutes
         int age = userData.getAge();
 
         if (age < 1) {
@@ -108,9 +108,9 @@ void Data::displayMessage() {
     }
 }
 
-void Data::calculateSleepDiff() {
+void Data::calculateSleepDiff(int day) {
     Time timeInstance;
-    int averageSleepMinutes = timeInstance.averageSleepTime();
+    int averageSleepMinutes = timeInstance.averageSleepTime(day);
     int age = userData.getAge();
     int averageSleepForAgeGroup;
 

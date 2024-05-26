@@ -33,7 +33,7 @@ void loginPage() {
 
 //! New User Page
 void newUserPage(map<string, User>& users) {
-    string username, password, password2, name;
+    string username, password, password2;
     int age;
     char gender;
     double height, weight;
@@ -80,10 +80,6 @@ void newUserPage(map<string, User>& users) {
 
         NewUser newUser(username, password);  
 
-        cout << "Name\t\t: ";
-        cin.ignore();
-        getline(cin, name);
-
         cout << "Age\t\t: ";
         cin >> age;
 
@@ -96,7 +92,6 @@ void newUserPage(map<string, User>& users) {
         cout << "Weight (kg)\t: ";
         cin >> weight;
 
-        newUser.setName(name);
         newUser.setAge(age);
         newUser.setGender(gender);
         newUser.setHeight(height);
@@ -104,9 +99,10 @@ void newUserPage(map<string, User>& users) {
         users[username] = newUser;   
 
         ofstream outFile("users.txt", ios::app);
-        outFile << username << " " << password << " " << name << " " << age << " " << gender << " " << height << " " << weight << endl;
+        outFile << username << " " << password << " " << age << " " << gender << " " << height << " " << weight << endl;
         outFile.close();
 }
+
 
 //! Existing User Page
 void existingUser(map<string, User>& users) {
@@ -115,32 +111,52 @@ void existingUser(map<string, User>& users) {
     printLines();
     cout << setw(52) << "LOGIN: " << endl;
 
-    cout << "Enter username: ";
-    cin >> username;
+    bool validUser = false;
+    do {
+        cout << "Enter username: ";
+        cin >> username;
 
-    if (users.find(username) == users.end()) {  
-        cout << "User does not exist" << endl;
-    } else {
-        while (true) {
-            try {
-                cout << "Enter password: ";
-                cin >> password;
+        if (users.find(username) == users.end()) 
+            cout << "User does not exist" << endl;
+        else 
+            validUser = true;
+    } while (!validUser);
+            
+    while (true) {
+        try {
+            cout << "Enter password: ";
+            cin >> password;
 
-                if (users[username].getPassword() != password) {
-                    throw std::invalid_argument("Incorrect password");
-                }
-
-                cout << endl;
-                cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl;
-                cout << "Welcome back to Dream Catcher!\t" << username << endl;
-                cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl;
-                break;
-                
-            } catch (std::invalid_argument&) {
-                cout << "Incorrect password, Please try again" << endl;
+            if (password != users[username].getPassword()) {
+                throw std::invalid_argument("Incorrect password");
             }
+
+            cout << endl;
+            cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl;
+            cout << "Welcome back to Dream Catcher!\t" << username << endl;
+            cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl;
+            break;
+            
+        } catch (std::invalid_argument&) {
+            cout << "Incorrect password, Please try again" << endl;
         }
     }
+}
+
+
+
+//! Sleep Analyzer Page
+void sleepAnalyzer() {
+    Time timeInstance;
+    int numDays;
+    cout << "Enter the number of days you want to analyze: ";
+    cin >> numDays;
+
+    int totalTime = timeInstance.dailySleepTime(numDays);
+    int avgTime = timeInstance.averageSleepTime(numDays);
+
+
+    
 }
 
 //! Main Menu Page
@@ -162,7 +178,7 @@ void mainMenu() {
 
     switch(Menu) {
         case 1:
-
+            sleepAnalyzer();
             break;
         case 2:
 
@@ -171,14 +187,7 @@ void mainMenu() {
 
             break;
     }
-
-
-
-
-
 }
-
-
 
 
 int main() {    
@@ -197,13 +206,14 @@ int main() {
         return 1; 
     }
 
-    while (inFile >> username >> password >> name >> age >> gender >> height >> weight) {
-        NewUser user(username, password);
-        user.setName(name);
+    while (inFile >> username >> password >> age >> gender >> height >> weight) {
+        NewUser user(username, "");
+        user.setPassword(password);
         user.setAge(age);
         user.setGender(gender);
         user.setHeight(height);
         user.setWeight(weight);
+        cout << user.getUsername();
         users[username] = user;
     }
     inFile.close();
