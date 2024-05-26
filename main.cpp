@@ -213,26 +213,28 @@ int main() {
         user.setGender(gender);
         user.setHeight(height);
         user.setWeight(weight);
-        cout << user.getUsername();
         users[username] = user;
     }
     inFile.close();
     
-    loginPage();
-    cin >> userType;
+    do {
+        loginPage();
+        cin >> userType;
 
-        if (userType == '1') 
-            newUserPage(users);
-            
-        else if (userType == '2') 
-            existingUser(users);
+        if (userType != '1' && userType != '2') 
+            cout << "Invalid input. Please enter 1 for New User or 2 for Existing User." << endl;
         
+    } while (userType != '1' && userType != '2');
 
+    if (userType == '1') 
+        newUserPage(users);
+    else if (userType == '2') 
+        existingUser(users);
 
-        cout << endl << "Please wait while we redirect you to the main menu..." << endl;
-        sleep(3);
+    cout << endl << "Please wait while we redirect you to the main menu..." << endl;
+    sleep(3);
 
-        mainMenu();   
+    mainMenu();   
 
     return 0;
 }
