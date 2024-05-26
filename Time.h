@@ -98,7 +98,7 @@ bool validEdate (int eday, int emonth, int eyear, int sday, int smonth, int syea
 }
 
 
-bool validTime(int hour, int minute) {
+bool Time::validTime(int hour, int minute) {
     if (hour < 0 || hour > 23) {
         cout << "INVALID HOUR\n";
         return false;

@@ -162,13 +162,13 @@ void mainMenu() {
 
     switch(Menu) {
         case 1:
-            cout << "Sleep Analyzer" << endl;
+
             break;
         case 2:
-            cout << "Sleep Symphony" << endl;
+
             break;
         case 3:
-            cout << "Quitting Program" << endl;
+
             break;
     }
 
@@ -222,9 +222,7 @@ int main() {
         cout << endl << "Please wait while we redirect you to the main menu..." << endl;
         sleep(3);
 
-        mainMenu();
-
-            
+        mainMenu();   
 
     return 0;
 }
