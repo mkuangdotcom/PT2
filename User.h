@@ -7,7 +7,6 @@ using namespace std;
 #ifndef USER_H
 #define USER_H
 
-class Data;
 
 class User {
     protected:
@@ -24,60 +23,6 @@ class User {
 
 };
 
-class NewUser : public User {       // Inheritance - extended from User class.
-    private:
-        string name;
-        int age;
-        char gender;
-        double height;
-        double weight;
-        double BMI;
-
-    public:
-        NewUser(string _username = "", string _password = "") : User(_username, _password)  {
-            name = "";
-            age = 0;
-            gender = ' ';
-            height = 0;
-            weight = 0;
-            BMI = 0;
-        } 
-
-
-        string getName() { return name; }
-        int getAge() { return age; }
-        char getGender() {return gender; }
-        double getHeight() { return height; }
-        double getWeight() { return weight; }
-        double getBMI() { return BMI; }
-
-        void setName(string _name) { name = _name; }
-        void setAge(int _age) { age = _age; }
-        void setGender(char a) { gender = a; }
-        void setHeight(double _height) { height = _height; }
-        void setWeight(double _weight) { weight = _weight; }
-        void calcBMI() { BMI = weight / pow(height, 2); }
-
-        void checkPassword(const std::string& password) {
-            if (password.length() < 8) {
-                throw std::invalid_argument("Password must be at least 8 characters long! ");
-            }
-        }
-
-        void samePassword(const std::string& password1, const std::string& password2) {
-            if (password1 != password2) {
-                throw std::invalid_argument("Passwords do not match! ");
-            }
-        }
-
-        /*void checkUser(const std::string& username) {
-            if (username.length() < 8) {
-                throw std::invalid_argument("Username must be at least 8 characters long! ");
-            }
-        }*/
-
-
-};
 
     
  

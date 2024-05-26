@@ -1,7 +1,7 @@
 #include "User.h"
 #include "Time.h"
 #include "Data.h"
-
+#include "NewUser.h"
 
 
 #include <iostream>
