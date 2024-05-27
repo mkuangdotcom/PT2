@@ -7,8 +7,11 @@ using namespace std;
 #define TIME_H
 
 class Time {
-    private:
+    protected:
         int shour, sminute, ehour, eminute;
+        int averageSleepMinutes;
+        int startTimes[30][2]; 
+        int endTimes[30][2];
 
     public:
         Time(int _shour = 0, int _sminute = 0, int _ehour = 0, int _eminute = 0) : shour(_shour), sminute(_sminute), ehour(_ehour), eminute(_eminute) { };
@@ -22,9 +25,10 @@ class Time {
         int getStartMinute() { return sminute; }
         int getEndHour() { return ehour; }
         int getEndMinute() { return eminute; }
-        bool validTime(int hour, int minute);
-        int dailySleepTime(int);
-        int averageSleepTime(int);
+        int getAverageSleepMinutes() { return averageSleepMinutes; }
+        void dailySleepTime(int);
+        bool validTime(int , int);
+        void printSleepTime(int );
 };
 
 bool validDate(int day, int month, int year) {
@@ -106,25 +110,34 @@ bool Time::validTime(int hour, int minute) {
     return true;
 }
 
-int Time::dailySleepTime(int day) {
+void Time::dailySleepTime(int day) {
     int totalSleepMinutes = 0;
+
+    cout << endl;
+    cout << "Please enter the start and end sleep time for each day (hour, minute) in 24-hour clock\n";
 
     for (int i = 0; i < day; i++) {
         int shour, sminute, ehour, eminute;
-        cout << "Day " << (i + 1) << ": ";
+        cout << "Day " << (i + 1) << ": " << endl;
 
         do {
-            std::cout << "Enter the start sleep time for day " << (i + 1) << " (hour and minute): ";
+            std::cout << "Start - \t";
             std::cin >> shour >> sminute;
         } while (!validTime(shour, sminute));
 
         do {
-            std::cout << "Enter the end sleep time for day " << (i + 1) << " (hour and minute): ";
+            std::cout << "End - \t\t";
             std::cin >> ehour >> eminute;
         } while (!validTime(ehour, eminute));
 
         setStartTime(shour, sminute);
         setEndTime(ehour, eminute);
+
+        startTimes[i][0] = getStartHour();
+        startTimes[i][1] = getStartMinute();
+        endTimes[i][0] = getEndHour();
+        endTimes[i][1] = getEndMinute();
+
 
         int startMinutes = getStartHour() * 60 + getStartMinute();
         int endMinutes = getEndHour() * 60 + getEndMinute();
@@ -133,19 +146,23 @@ int Time::dailySleepTime(int day) {
         if (endMinutes < startMinutes) {
             endMinutes += 24 * 60;
         }
-
+        cout << endl;
         totalSleepMinutes += endMinutes - startMinutes;
     }
 
-    return totalSleepMinutes;
+    averageSleepMinutes = totalSleepMinutes / day ;
+
 }
 
-int Time::averageSleepTime(int day) {
-    int totalSleepMinutes = dailySleepTime(day);
-    int averageSleepMinutes = totalSleepMinutes / day ;
-
-    return averageSleepMinutes;
+void Time::printSleepTime(int day) {
+    cout << "\t" << "Start" << "\t\t" << "End" << endl;
+    for (int i = 0; i < day; i++) {
+        cout << "Day " << (i + 1) << ": \t" << startTimes[i][0] << startTimes[i][1] << "\t - \t" << endTimes[i][0] << endTimes[i][1] << endl;
+    }
+    cout << endl;
 }
+
+
  
 
 

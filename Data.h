@@ -13,6 +13,7 @@ class Data {
     protected:
         char category;
         NewUser userData; // Use NewUser instead of User
+        Time time;
 
     public:
         Data(char _category = ' ', NewUser _userData = NewUser()) : category(_category), userData(_userData) { } // Default constructor (with default values
@@ -28,8 +29,7 @@ class Data {
 
 
 void Data::analyzeSleep(int day) {
-     Time timeInstance;
-        int averageSleep = timeInstance.averageSleepTime(day); // averageSleep is in minutes
+        int averageSleep = time.getAverageSleepMinutes();
         int age = userData.getAge();
 
         if (age < 1) {
@@ -109,8 +109,7 @@ void Data::displayMessage() {
 }
 
 void Data::calculateSleepDiff(int day) {
-    Time timeInstance;
-    int averageSleepMinutes = timeInstance.averageSleepTime(day);
+    
     int age = userData.getAge();
     int averageSleepForAgeGroup;
 
@@ -128,15 +127,15 @@ void Data::calculateSleepDiff(int day) {
         averageSleepForAgeGroup = 7.5*60; // Average of 7 and 8 hours
     }
 
-    int differenceInMinutes = abs(averageSleepMinutes - averageSleepForAgeGroup);
-    int differenceInHours = differenceInMinutes / 60;
-    differenceInMinutes %= 60;
 
-    if (averageSleepMinutes < averageSleepForAgeGroup && category == 'B') {
+    //int differenceInHours = differenceInMinutes / 60;
+    // differenceInMinutes %= 60;
+
+    /*if (averageSleepMinutes < averageSleepForAgeGroup && category == 'B') {
         cout << "Sleeping less than average by: " << differenceInHours << " hours and " << differenceInMinutes << " minutes" << endl;
     } else if (averageSleepMinutes > averageSleepForAgeGroup && category == 'D') {
         cout << "Sleeping more than average by: " << differenceInHours << " hours and " << differenceInMinutes << " minutes" << endl;
-    }
+    }*/
 }
 
 

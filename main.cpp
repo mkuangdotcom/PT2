@@ -32,7 +32,7 @@ void loginPage() {
 }
 
 //! New User Page
-void newUserPage(map<string, User>& users) {
+NewUser newUserPage(map<string, NewUser>& users) {
     string username, password, password2;
     int age;
     char gender;
@@ -101,11 +101,13 @@ void newUserPage(map<string, User>& users) {
         ofstream outFile("users.txt", ios::app);
         outFile << username << " " << password << " " << age << " " << gender << " " << height << " " << weight << endl;
         outFile.close();
+
+        return users[username];
 }
 
 
 //! Existing User Page
-void existingUser(map<string, User>& users) {
+NewUser existingUser(map<string, NewUser>& users) {
     string username, password;
 
     printLines();
@@ -141,26 +143,51 @@ void existingUser(map<string, User>& users) {
             cout << "Incorrect password, Please try again" << endl;
         }
     }
+    return users[username];
 }
 
 
 
 //! Sleep Analyzer Page
-void sleepAnalyzer() {
+void sleepAnalyzer(NewUser& user) {
     Time timeInstance;
     int numDays;
+    cout << endl << endl;
+    printLines();
+    cout << setw(58) << "SLEEP ANALYZER: " << endl;
+    printLines();
+
     cout << "Enter the number of days you want to analyze: ";
     cin >> numDays;
+    timeInstance.dailySleepTime(numDays);
 
-    int totalTime = timeInstance.dailySleepTime(numDays);
-    int avgTime = timeInstance.averageSleepTime(numDays);
+    cout << endl << endl;
+    cout << setw(55) << "Sleep Report for " << user.getUsername() << endl;
+    printLines();
+    cout << "Name: \t\t" << user.getUsername() << endl;
+    cout << "Age: \t\t" << user.getAge() << endl;
+    if (user.getGender() == 'M')
+        cout << "Gender: \tMale" << endl;
+    else if (user.getGender() == 'F')
+        cout << "Gender: \tFemale" << endl;
+
+    cout << "Height: \t" << user.getHeight() << " m" << endl;
+    cout << "Weight: \t" << user.getWeight() << " kg" << endl;
+    printLines();
+    timeInstance.printSleepTime(numDays);
+
+    // Call the data function analyze here
+    // analyze(data);
+
+
+
 
 
     
 }
 
 //! Main Menu Page
-void mainMenu() {
+void mainMenu(NewUser &user) {
     int Menu;
 
     cout << endl << endl << endl;
@@ -174,11 +201,10 @@ void mainMenu() {
     cout << "\t\t3 - Quit Program" << endl << endl;
     cout << "Enter your choice: ";
     cin >> Menu;
-    printLines();
 
     switch(Menu) {
         case 1:
-            sleepAnalyzer();
+            sleepAnalyzer(user);
             break;
         case 2:
 
@@ -198,7 +224,7 @@ int main() {
     double height, weight;
 
     // Map to store all users
-    map<string, User> users;        
+    map<string, NewUser> users;        
 
     ifstream inFile("users.txt");
     if (!inFile) {
@@ -226,15 +252,16 @@ int main() {
         
     } while (userType != '1' && userType != '2');
 
+    NewUser currentUser;
     if (userType == '1') 
-        newUserPage(users);
+        currentUser = newUserPage(users);
     else if (userType == '2') 
-        existingUser(users);
+        currentUser = existingUser(users);
 
     cout << endl << "Please wait while we redirect you to the main menu..." << endl;
     sleep(3);
 
-    mainMenu();   
+    mainMenu(currentUser);   
 
     return 0;
 }
