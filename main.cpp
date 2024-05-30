@@ -43,8 +43,17 @@ NewUser newUserPage(map<string, NewUser>& users) {
     printLines();
     cout << setw(52) << "LOGIN: " << endl ;
     
-    cout << "Please enter a username  : ";
-    cin >> username;
+    bool repeatUser = false;
+    do {
+        cout << "Please enter a username: ";
+        cin >> username;
+
+        if (users.find(username) == users.end()) 
+            repeatUser = true;
+        else 
+            cout << "Username already exists. Please try again." << endl;
+    } while (!repeatUser);
+
     NewUser tempUser(username, ""); 
 
         while (true) {
