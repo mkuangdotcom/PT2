@@ -15,7 +15,9 @@
 #include <unistd.h>     // For sleep function
 using namespace std;
 
-
+// Function Prototypes
+void mainMenu(NewUser&);
+void Quit();
 
 void printLines() {
     for (int i = 0; i < 100; i++) 
@@ -150,44 +152,73 @@ NewUser existingUser(map<string, NewUser>& users) {
 
 //! Sleep Analyzer Page
 void sleepAnalyzer(NewUser& user) {
-    Time time;
-    Data data;
-    int numDays;
-    cout << endl << endl;
+    char choice;
+    do {
+        Time time;
+        Data data;
+        int numDays;
+        cout << endl << endl;
+        printLines();
+        cout << setw(58) << "SLEEP ANALYZER: " << endl;
+        printLines();
+
+        cout << "Enter the number of days you want to analyze: ";
+        cin >> numDays;
+        time.dailySleepTime(numDays);
+
+        cout << endl << endl;
+        cout << setw(55) << "Sleep Report for " << user.getUsername() << endl;
+        printLines();
+        cout << "Name: \t\t" << user.getUsername() << endl;
+        cout << "Age: \t\t" << user.getAge() << endl;
+        if (user.getGender() == 'M')
+            cout << "Gender: \tMale" << endl;
+        else if (user.getGender() == 'F')
+            cout << "Gender: \tFemale" << endl;
+
+        cout << "Height: \t" << user.getHeight() << " m" << endl;
+        cout << "Weight: \t" << user.getWeight() << " kg" << endl;
+        printLines();
+        time.printSleepTime();
+        printLines();
+
+        int averageTime = time.getAverageSleepMinutes();
+        int age = user.getAge();
+
+        data.analyzeSleep(averageTime, age);
+        data.displayMessage();
+        data.calculateSleepDiff(averageTime, age);
+
+
+
+        cout << endl << endl;
+        cout << "1 - Generate a new report" << endl;
+        cout << "Q - Quit system" << endl;
+        cout << "Press any key to return to the main menu" << endl;
+        cout << "Enter your choice: ";
+        cin >> choice;
+    } while (choice == '1');
+
+    switch (toupper(choice)) {
+        case 'Q':
+            Quit();
+            break;
+        
+        default:
+            mainMenu(user);
+            break;
+    }
+}
+
+//! Exit System
+void Quit() {
+    cout << endl;
     printLines();
-    cout << setw(58) << "SLEEP ANALYZER: " << endl;
+    cout << "Thank you for using Dream Catcher. Have a good day!" << endl;
     printLines();
+    cout << endl;
+    exit(0);
 
-    cout << "Enter the number of days you want to analyze: ";
-    cin >> numDays;
-    time.dailySleepTime(numDays);
-
-    cout << endl << endl;
-    cout << setw(55) << "Sleep Report for " << user.getUsername() << endl;
-    printLines();
-    cout << "Name: \t\t" << user.getUsername() << endl;
-    cout << "Age: \t\t" << user.getAge() << endl;
-    if (user.getGender() == 'M')
-        cout << "Gender: \tMale" << endl;
-    else if (user.getGender() == 'F')
-        cout << "Gender: \tFemale" << endl;
-
-    cout << "Height: \t" << user.getHeight() << " m" << endl;
-    cout << "Weight: \t" << user.getWeight() << " kg" << endl;
-    printLines();
-    time.printSleepTime();
-    printLines();
-
-    int averageTime = time.getAverageSleepMinutes();
-    int age = user.getAge();
-
-    data.analyzeSleep(averageTime, age);
-    data.displayMessage();
-    data.calculateSleepDiff(averageTime, age);
-    printLines();
-
-
-    
 }
 
 //! Main Menu Page
@@ -202,11 +233,11 @@ void mainMenu(NewUser &user) {
     cout << "Please select an option: " << endl;
     cout << "\t\t1 - Sleep Analyzer" << endl;
     cout << "\t\t2 - Sleep Symphony" << endl;
-    cout << "\t\t3 - Quit Program" << endl << endl;
+    cout << "\t\tQ - Quit Program" << endl << endl;
     cout << "Enter your choice: ";
     cin >> Menu;
 
-    switch(Menu) {
+    switch(toupper(Menu)) {
         case 1:
             sleepAnalyzer(user);
             break;
