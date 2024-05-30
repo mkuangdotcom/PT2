@@ -244,8 +244,8 @@ void mainMenu(NewUser &user) {
         case 2:
 
             break;
-        case 3:
-
+        case 'Q':
+            Quit();
             break;
     }
 }
