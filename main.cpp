@@ -45,7 +45,7 @@ NewUser newUserPage(map<string, NewUser>& users) {
     
     bool repeatUser = false;
     do {
-        cout << "Please enter a username: ";
+        cout << "Please enter a username  : ";
         cin >> username;
 
         if (users.find(username) == users.end()) 
@@ -94,8 +94,10 @@ NewUser newUserPage(map<string, NewUser>& users) {
         cout << "Age\t\t: ";
         cin >> age;
 
+        do {
         cout << "Gender (M/F)\t: ";
         cin >> gender;
+        } while (gender != 'M' && gender != 'F');
 
         cout << "Height (m)\t: ";
         cin >> height;
@@ -232,7 +234,7 @@ void Quit() {
 
 //! Main Menu Page
 void mainMenu(NewUser &user) {
-    int Menu;
+    char choice;
 
     cout << endl << endl << endl;
     printLines();
@@ -244,13 +246,13 @@ void mainMenu(NewUser &user) {
     cout << "\t\t2 - Sleep Symphony" << endl;
     cout << "\t\tQ - Quit Program" << endl << endl;
     cout << "Enter your choice: ";
-    cin >> Menu;
+    cin >> choice;
 
-    switch(toupper(Menu)) {
-        case 1:
+    switch(toupper(choice)) {
+        case '1':
             sleepAnalyzer(user);
             break;
-        case 2:
+        case '2':
 
             break;
         case 'Q':
