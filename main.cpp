@@ -2,7 +2,7 @@
 #include "Time.h"
 #include "Data.h"
 #include "NewUser.h"
-
+#include "User.h"
 
 #include <iostream>
 #include <string>
@@ -150,7 +150,8 @@ NewUser existingUser(map<string, NewUser>& users) {
 
 //! Sleep Analyzer Page
 void sleepAnalyzer(NewUser& user) {
-    Time timeInstance;
+    Time time;
+    Data data;
     int numDays;
     cout << endl << endl;
     printLines();
@@ -159,7 +160,7 @@ void sleepAnalyzer(NewUser& user) {
 
     cout << "Enter the number of days you want to analyze: ";
     cin >> numDays;
-    timeInstance.dailySleepTime(numDays);
+    time.dailySleepTime(numDays);
 
     cout << endl << endl;
     cout << setw(55) << "Sleep Report for " << user.getUsername() << endl;
@@ -174,13 +175,16 @@ void sleepAnalyzer(NewUser& user) {
     cout << "Height: \t" << user.getHeight() << " m" << endl;
     cout << "Weight: \t" << user.getWeight() << " kg" << endl;
     printLines();
-    timeInstance.printSleepTime(numDays);
+    time.printSleepTime();
+    printLines();
 
-    // Call the data function analyze here
-    // analyze(data);
+    int averageTime = time.getAverageSleepMinutes();
+    int age = user.getAge();
 
-
-
+    data.analyzeSleep(averageTime, age);
+    data.displayMessage();
+    data.calculateSleepDiff(averageTime, age);
+    printLines();
 
 
     
@@ -259,7 +263,7 @@ int main() {
         currentUser = existingUser(users);
 
     cout << endl << "Please wait while we redirect you to the main menu..." << endl;
-    sleep(3);
+    sleep(1);
 
     mainMenu(currentUser);   
 

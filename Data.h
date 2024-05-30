@@ -12,78 +12,74 @@ using namespace std;
 class Data {
     protected:
         char category;
-        NewUser userData; // Use NewUser instead of User
+        NewUser newUser;
         Time time;
-
     public:
-        Data(char _category = ' ', NewUser _userData = NewUser()) : category(_category), userData(_userData) { } // Default constructor (with default values
+        Data(char _category = ' ', NewUser _userData = NewUser(), Time _time = Time()) : category(_category), newUser(_userData), time(_time) { } // Default constructor (with default values
 
         void setCategory(char _category) { category = _category; }
         char getCategory() { return category; }
 
 
-        void analyzeSleep(int);
+        void analyzeSleep(int, int);
         void displayMessage();
-        void calculateSleepDiff(int );
+        void calculateSleepDiff(int, int);
 };
 
 
-void Data::analyzeSleep(int day) {
-        int averageSleep = time.getAverageSleepMinutes();
-        int age = userData.getAge();
-
+void Data::analyzeSleep(int minutes, int age) {
         if (age < 1) {
-            if (averageSleep < 14*60) {
+            if (minutes < 14*60) {
                 category = 'B';
-            } else if (averageSleep > 15*60) {
+            } else if (minutes > 15*60) {
                 category = 'C';
             } else {
                 category = 'A';
             }
         } else if (age < 3) {
-            if (averageSleep < 12*60) {
+            if (minutes < 12*60) {
                 category = 'B';
-            } else if (averageSleep > 14*60) {
+            } else if (minutes > 14*60) {
                 category = 'C';
             } else {
                 category = 'A';
             }
         } else if (age < 6) {
-            if (averageSleep < 10*60) {
+            if (minutes < 10*60) {
                 category = 'B';
-            } else if (averageSleep > 12*60) {
+            } else if (minutes > 12*60) {
                 category = 'C';
             } else {
                 category = 'A';
             }
         } else if (age < 13) {
-            if (averageSleep < 9*60) {
+            if (minutes < 9*60) {
                 category = 'B';
-            } else if (averageSleep > 10*60) {
+            } else if (minutes > 10*60) {
                 category = 'C';
             } else {
                 category = 'A';
             }
         } else if (age < 18) {
-            if (averageSleep < 8*60) {
+            if (minutes < 8*60) {
                 category = 'B';
-            } else if (averageSleep > 9*60) {
+            } else if (minutes > 9*60) {
                 category = 'C';
             } else {
                 category = 'A';
             }
         } else if (age < 65) {
-            if (averageSleep < 7*60) {
+            if (minutes < 7*60) {
                 category = 'B';
-            } else if (averageSleep > 8*60) {
+            } else if (minutes > 8*60) {
                 category = 'C';
             } else {
                 category = 'A';
             }
         } else {
-            if (averageSleep < 7*60) {
+            if (minutes < 7*60) {
                 category = 'B';
-            } else if (averageSleep > 8*60) {
+            } else if (minutes > 8*60) {
                 category = 'C';
             } else {
                 category = 'A';
@@ -108,11 +104,8 @@ void Data::displayMessage() {
     }
 }
 
-void Data::calculateSleepDiff(int day) {
-    
-    int age = userData.getAge();
+void Data::calculateSleepDiff(int averageTime, int age) {
     int averageSleepForAgeGroup;
-
     if (age < 1) {
         averageSleepForAgeGroup = 14.5*60; // Average of 14 and 15 hours
     } else if (age < 3) {
@@ -127,15 +120,28 @@ void Data::calculateSleepDiff(int day) {
         averageSleepForAgeGroup = 7.5*60; // Average of 7 and 8 hours
     }
 
+    int averageSleepMinutes = averageTime;
+    int differenceInMinutes = abs(averageSleepMinutes - averageSleepForAgeGroup);
+    
+    int dhours = differenceInMinutes / 60; 
+    int dminutes = differenceInMinutes % 60; 
 
-    //int differenceInHours = differenceInMinutes / 60;
-    // differenceInMinutes %= 60;
+    switch (category) {
+        case 'A':
+            cout << "Keep it up!" << endl;
+            break;
+        case 'B':
+            cout << "Sleep time less than average by: " << dhours << " hours and " << dminutes << " minutes" << endl;
+            break;
+        case 'C':
+            cout << "Sleep time more than average by: " << dhours << " hours and " << dminutes << " minutes" << endl;
+            break;
+        default:
+            cout << "Invalid category." << endl;
+            break;
+    }
 
-    /*if (averageSleepMinutes < averageSleepForAgeGroup && category == 'B') {
-        cout << "Sleeping less than average by: " << differenceInHours << " hours and " << differenceInMinutes << " minutes" << endl;
-    } else if (averageSleepMinutes > averageSleepForAgeGroup && category == 'D') {
-        cout << "Sleeping more than average by: " << differenceInHours << " hours and " << differenceInMinutes << " minutes" << endl;
-    }*/
+
 }
 
 
