@@ -24,11 +24,11 @@ class Time {
         void setStartTime(int _shour, int _sminute) { shour = _shour, sminute = _sminute; }
         void setEndTime(int _ehour, int _eminute) { ehour = _ehour, eminute = _eminute; }
         void setDay(int _day) { day = _day; }
-        int getDay () { return day; }
-        int getStartHour() { return shour; }
-        int getStartMinute() { return sminute; }
-        int getEndHour() { return ehour; }
-        int getEndMinute() { return eminute; }
+        int getDay () const { return day; }
+        int getStartHour() const { return shour; }
+        int getStartMinute() const { return sminute; }
+        int getEndHour() const { return ehour; }
+        int getEndMinute() const { return eminute; }
         void setAverageSleepMinutes(int avg) {averageSleepMinutes = avg; }
         int getAverageSleepMinutes() { return averageSleepMinutes; }
         void dailySleepTime(int);
@@ -116,7 +116,6 @@ bool Time::validTime(int hour, int minute) {
 }
 
 void Time::dailySleepTime(int _day) {
-    cout << "SUCCESS";
     int totalSleepMinutes = 0;
     setDay(_day);
 

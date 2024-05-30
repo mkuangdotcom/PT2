@@ -18,7 +18,7 @@ class Data {
         Data(char _category = ' ', NewUser _userData = NewUser(), Time _time = Time()) : category(_category), newUser(_userData), time(_time) { } // Default constructor (with default values
 
         void setCategory(char _category) { category = _category; }
-        char getCategory() { return category; }
+        char getCategory() const { return category; }
 
 
         void analyzeSleep(int, int);

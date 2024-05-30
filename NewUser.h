@@ -27,10 +27,10 @@ class NewUser : public User {
 
 
         string getName() { return name; }
-        int getAge() { return age; }
-        char getGender() {return gender; }
-        double getHeight() { return height; }
-        double getWeight() { return weight; }
+        int getAge() const { return age; }
+        char getGender() const {return gender; }
+        double getHeight() const { return height; }
+        double getWeight() const { return weight; }
 
         void setName(string _name) { name = _name; }
         void setAge(int _age) { age = _age; }

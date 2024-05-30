@@ -17,8 +17,8 @@ class User {
 
         void setUsername(string _username) { username = _username; }
         void setPassword(string _password) { password = _password; }
-        string getUsername() { return username; }
-        string getPassword() { return password; }
+        string getUsername() const { return username; }
+        string getPassword() const { return password; }
 
 };
 

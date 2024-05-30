@@ -26,7 +26,7 @@ void printLines() {
 }
 
 //! Login Page
-void loginPage() {
+void const loginPage() {
     printLines();
     cout << setw(62) << "Welcome to Dream Catcher: " << endl;
     printLines();
