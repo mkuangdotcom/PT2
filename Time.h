@@ -160,9 +160,23 @@ void Time::dailySleepTime(int _day) {
 }
 
 void Time::printSleepTime() {
-    cout << "\t" << "Start" << "\t\t" << "End" << endl;
+    cout << "\t\t\t" << "Start" << "\t\t" << "End" << endl;
     for (int i = 0; i < day; i++) {
-        cout << "Day " << (i + 1) << ": \t" << startTimes[i][0] << startTimes[i][1] << "\t - \t" << endTimes[i][0] << endTimes[i][1] << endl;
+        if (startTimes[i][0] < 10) 
+            cout << "0";
+        cout << "Day " << (i + 1) << ": \t\t\t" << startTimes[i][0];
+
+        if (startTimes[i][1] < 10) 
+            cout << "0";
+        cout << startTimes[i][1] << "\t - \t";
+        
+        if (endTimes[i][0] < 10) 
+            cout << "0";
+        cout << endTimes[i][0];
+
+        if (endTimes[i][1] < 10) 
+            cout << "0";
+        cout << endTimes[i][1] << endl;
     }
     cout << endl;
 }
