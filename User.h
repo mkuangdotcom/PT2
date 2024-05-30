@@ -1,7 +1,6 @@
 #include <iostream>
 #include <cmath>
 #include <string>
-#include <stdexcept> // for std::invalid_argument
 using namespace std;
 
 #ifndef USER_H

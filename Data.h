@@ -2,7 +2,7 @@
 #include <string>
 #include <vector>
 #include <iomanip>
-#include "NewUser.h" // Include the User header file
+#include "NewUser.h" 
 #include "Time.h"
 using namespace std;
 
@@ -107,17 +107,17 @@ void Data::displayMessage() {
 void Data::calculateSleepDiff(int averageTime, int age) {
     int averageSleepForAgeGroup;
     if (age < 1) {
-        averageSleepForAgeGroup = 14.5*60; // Average of 14 and 15 hours
+        averageSleepForAgeGroup = 14.5*60; 
     } else if (age < 3) {
-        averageSleepForAgeGroup = 13*60; // Average of 12 and 14 hours
+        averageSleepForAgeGroup = 13*60; 
     } else if (age < 6) {
-        averageSleepForAgeGroup = 11*60; // Average of 10 and 12 hours
+        averageSleepForAgeGroup = 11*60;
     } else if (age < 13) {
-        averageSleepForAgeGroup = 9.5*60; // Average of 9 and 10 hours
+        averageSleepForAgeGroup = 9.5*60; 
     } else if (age < 18) {
-        averageSleepForAgeGroup = 8.5*60; // Average of 8 and 9 hours
+        averageSleepForAgeGroup = 8.5*60; 
     } else {
-        averageSleepForAgeGroup = 7.5*60; // Average of 7 and 8 hours
+        averageSleepForAgeGroup = 7.5*60; 
     }
 
     int averageSleepMinutes = averageTime;

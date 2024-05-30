@@ -149,7 +149,6 @@ void Time::dailySleepTime(int _day) {
         int startMinutes = getStartHour() * 60 + getStartMinute();
         int endMinutes = getEndHour() * 60 + getEndMinute();
 
-        // If the end time is less than the start time, it means the sleep period extended to the next day
         if (endMinutes < startMinutes) {
             endMinutes += (24 * 60);
         }
