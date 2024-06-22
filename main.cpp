@@ -3,6 +3,7 @@
 #include "Data.h"
 #include "NewUser.h"
 #include "User.h"
+#include "Symphony.h"
 
 #include <iostream>
 #include <string>
@@ -160,7 +161,6 @@ NewUser existingUser(map<string, NewUser>& users) {
 }
 
 
-
 //! Sleep Analyzer Page
 void sleepAnalyzer(NewUser& user) {
     char choice;
@@ -201,10 +201,9 @@ void sleepAnalyzer(NewUser& user) {
         data.calculateSleepDiff(averageTime, age);
 
 
-
         cout << endl << endl;
         cout << "1 - Generate a new report" << endl;
-        cout << "Q - Quit system" << endl;
+        cout << "Q - Quit Program" << endl;
         cout << "Press any key to return to the main menu" << endl;
         cout << "Enter your choice: ";
         cin >> choice;
@@ -219,6 +218,116 @@ void sleepAnalyzer(NewUser& user) {
             mainMenu(user);
             break;
     }
+}
+
+//! Add Music
+void addMusic(){
+    ofstream outFile("musicList.txt",ios::app);
+    char option;
+    string musicName, musicLink,musicType;
+     
+    cout << "Enter the name of music: ";
+    cin.ignore();
+    getline(cin,musicName);
+    cout << "Enter the link of the music: ";
+    getline(cin,musicLink);
+    cout << "Enter the type of the music(Classical,White Noise,....): ";
+    getline(cin,musicType);
+    outFile  << endl << musicName;
+    outFile << endl << musicLink;
+    outFile << endl << musicType;
+    cout << endl;
+            
+    outFile.close();
+}
+
+//! Load Music 
+void loadMusic(){
+    ifstream inFile;
+    inFile.open("musicList.txt");
+    string list,url,composer,typeW,typeF;
+    int m=0,u=0,c=0,w=0,f=0;
+
+    if (!inFile) {
+        cout << "Unable to open file musicList.txt";
+        exit(1);   // call system to stop
+    }
+
+    int i=0;
+    for(int i=0;i<100;i++){             // Input list of name and url link from musicList.txt
+        if(i%3==0){
+            list = "";
+            getline(inFile, list);            
+            m++;
+        }
+
+        else if(i%3==1){ 
+            url = "";
+            getline(inFile, url);
+            u++;
+        }
+            
+        else{
+            if(i<30){                          
+                composer="";
+                getline(inFile,composer);        // Input composer from file
+                ClassicM c1(list,url,composer);  // Create an object for each classical music
+                c1.dispClist(c);
+                c++;
+            }
+
+            else if(i<60 && i>=30){
+                typeW="";
+                getline(inFile,typeW);          // Input type of White Noise from file
+                WhiteNoise w1(list,url,typeW);  // Create object for each white Noise 
+                w1.dispClist(w);
+                w++;
+            }
+
+            if(i<210 && i>=60){
+                typeF="";
+                getline(inFile,typeF);          // Input type of user defined music
+                FavM f1(list,url,typeF);        // Create object for each user defined music
+                f1.dispClist(f);
+                f++;
+            }
+        }
+    }
+    inFile.close();
+}
+
+//! SleepSymphony Page
+void sleepSymphony(NewUser &user){
+    char option;
+    
+    cout << endl << endl;
+    printLines();
+    cout << setw(58) << "SLEEP SYMPHONY: " << endl;
+    printLines();
+    loadMusic();
+    
+    do{
+        cout << endl;
+        cout << "1 - Add New Song" << endl;
+        cout << "Q - Quit Program" << endl;
+        cout << "Press any key to return to the main menu" << endl;
+        cout << "Enter your choice: ";
+        cin >> option;    
+
+        switch (toupper(option)) {
+            case '1':
+                addMusic();
+                break;
+
+            case 'Q':
+                Quit();
+                break;
+
+            default:
+                mainMenu(user);
+                break;
+        }
+    }while (option=='1');
 }
 
 //! Exit System
@@ -248,20 +357,19 @@ void mainMenu(NewUser &user) {
     cout << "Enter your choice: ";
     cin >> choice;
 
-    switch(toupper(choice)) {
+    switch(toupper(choice)){
         case '1':
             sleepAnalyzer(user);
             break;
         case '2':
-
+            sleepSymphony(user);
             break;
         case 'Q':
             Quit();
             break;
     }
-}
-
-
+}    
+    
 int main() {    
     string username, password, password2, name;
     char userType;
@@ -275,7 +383,7 @@ int main() {
     ifstream inFile("users.txt");
     if (!inFile) {
         cout << "Unable to open file";
-        return 1; 
+        exit(1); 
     }
 
     while (inFile >> username >> password >> age >> gender >> height >> weight) {
