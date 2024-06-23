@@ -12,7 +12,7 @@ class Music{
     protected:
     string cList;
     string urlcList;
-    
+
     public:
     Music(string _cList,string _url){
         cList=_cList;
@@ -22,16 +22,18 @@ class Music{
     string getcList() {return cList;}
     string geturlcList() {return urlcList;}
 
-    void setcList(string _music) {cList=_music;}
+    void setcList(string _cList) {cList=_cList;}
     void seturlcList(string _url) {urlcList=_url;}
 
-    virtual void dispClist(int i) {
+    virtual void dispClist() {
         if (!cList.empty() && !urlcList.empty()) {
-            cout << setw(3) << left << i+1 << ": " << "\033]8;;" << urlcList << "\033\\" 
+            cout << ": " << "\033]8;;" << urlcList << "\033\\" 
                  << setw(50)<< left << cList << "\033]8;;\033\\";
             cout << setw(2) << " ";
         }
     } 
+
+    friend void loadMusic();
 };
 
 class ClassicM:public Music{
@@ -45,11 +47,8 @@ class ClassicM:public Music{
     string getComposer() {return composer;}
     void setComposer(string name) {composer=name;}
 
-    void dispClist(int i){
-        if(i==0)
-            cout << "Classical Music: \n";
-
-        Music::dispClist(i);
+    void dispClist(){
+            Music::dispClist();
             cout << "Composer: " << composer << endl;
     }
 };
@@ -65,11 +64,8 @@ class WhiteNoise: public Music{
     void setType(string _type) {typeW=_type;}
     string getType() {return typeW;}
 
-    void dispClist(int i){
-        if(i==0)
-            cout << "\nWhite Noise: \n";
-
-        Music::dispClist(i);
+    void dispClist(){
+        Music::dispClist();
         cout << "Type: " << typeW << endl;
     }
 };
@@ -85,18 +81,9 @@ class FavM: public Music{
     void setType(string _type) {typeF=_type;}
     string getType(int i) {return typeF;}
 
-    void dispClist(int i){
-        if(i==0)
-            cout << "\nUser Defined Music: \n";
-
-        if(!typeF.empty()){
-            Music::dispClist(i);
+    void dispClist(){
+            Music::dispClist();
             cout << "Type: " << typeF << endl;
-        }
-
-        else
-        if(i==0)
-            cout << "!!Doesn't have User Defined Music!!\n\n";
     }
 };
 

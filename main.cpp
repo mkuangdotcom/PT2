@@ -14,6 +14,7 @@
 #include <exception>
 #include <stdexcept>
 #include <unistd.h>     // For sleep function
+#include <vector>
 using namespace std;
 
 // Function Prototypes
@@ -220,6 +221,11 @@ void sleepAnalyzer(NewUser& user) {
     }
 }
 
+//! To check whether the User Defined Music is empty or not
+bool checkEmpty(Music m){
+    return (m.getcList().empty());
+}
+
 //! Add Music
 void addMusic(){
     ofstream outFile("musicList.txt",ios::app);
@@ -246,7 +252,9 @@ void loadMusic(){
     ifstream inFile;
     inFile.open("musicList.txt");
     string list,url,composer,typeW,typeF;
-    int m=0,u=0,c=0,w=0,f=0;
+    vector <ClassicM> cm;
+    vector <WhiteNoise> wn;
+    vector <FavM> fm;
 
     if (!inFile) {
         cout << "Unable to open file musicList.txt";
@@ -258,41 +266,69 @@ void loadMusic(){
         if(i%3==0){
             list = "";
             getline(inFile, list);            
-            m++;
         }
 
         else if(i%3==1){ 
             url = "";
             getline(inFile, url);
-            u++;
         }
             
         else{
             if(i<30){                          
                 composer="";
                 getline(inFile,composer);        // Input composer from file
-                ClassicM c1(list,url,composer);  // Create an object for each classical music
-                c1.dispClist(c);
-                c++;
+                cm.push_back(ClassicM(list,url,composer));  // Create an object for each classical music
             }
 
             else if(i<60 && i>=30){
                 typeW="";
                 getline(inFile,typeW);          // Input type of White Noise from file
-                WhiteNoise w1(list,url,typeW);  // Create object for each white Noise 
-                w1.dispClist(w);
-                w++;
+                wn.push_back(WhiteNoise(list,url,typeW));  // Create object for each white Noise 
             }
 
             if(i<210 && i>=60){
                 typeF="";
                 getline(inFile,typeF);          // Input type of user defined music
-                FavM f1(list,url,typeF);        // Create object for each user defined music
-                f1.dispClist(f);
-                f++;
+                if(!typeF.empty())
+                fm.push_back(FavM(list,url,typeF));        // Create object for each user defined music
+
+                else
+                    break;
             }
         }
     }
+
+    for(int i=0;i<cm.size();i++){
+        if (i==0)
+            cout << "Classical Music: \n";
+
+        cout << setw(3) << left << i+1;
+        cm[i].dispClist();
+    }
+
+    for(int i=0;i<wn.size();i++){
+        if(i==0)
+            cout << "\nWhite Noise: \n";
+
+        cout << setw(3) << left << i+1;
+        wn[i].dispClist();
+    }
+
+    for(int i=0; i<fm.size();i++){
+        if(i==0)
+            cout << "\nUser Defined Music: \n";
+
+        cout << setw(3) << left << i+1;
+        fm[i].dispClist();
+            
+    }
+    cout << endl;
+
+    if (fm.size()<1){
+            cout << "\nUser Defined Music: \n";
+            cout << "!!!Doesn't have any User Defined Music!!!\n";
+    }
+
     inFile.close();
 }
 
