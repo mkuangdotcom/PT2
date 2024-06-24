@@ -1,6 +1,7 @@
 #include <iomanip>
 #include <iostream>
 #include <string>
+#include <exception>
 using namespace std;
 
 #ifndef TIME_H  
@@ -65,15 +66,41 @@ void Time::dailySleepTime(int _day) {
         int shour, sminute, ehour, eminute;
         cout << "Day " << (i + 1) << ": " << endl;
 
-        do {
-            std::cout << "Start - \t";
-            std::cin >> shour >> sminute;
-        } while (!validTime(shour, sminute));
+            bool validStart = false;
+    while (!validStart) {
+        try {
+            do {
+                cout << "Start - \t";
+                cin >> shour >> sminute;
+                if (!cin) { 
+                    cin.clear(); 
+                    cin.ignore(numeric_limits<streamsize>::max(), '\n'); 
+                    throw invalid_argument("Invalid input for start time");
+                }
+            } while (!validTime(shour, sminute));
+            validStart = true; 
+        } catch (const invalid_argument& e) {
+            cerr << "Error: " << e.what() << ". Please enter the start time again." << endl;
+        }
+    }
 
-        do {
-            std::cout << "End - \t\t";
-            std::cin >> ehour >> eminute;
-        } while (!validTime(ehour, eminute));
+    bool validEnd = false;
+    while (!validEnd) {
+        try {
+            do {
+                cout << "End - \t\t";
+                cin >> ehour >> eminute;
+                if (!cin) {
+                    cin.clear();
+                    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                    throw invalid_argument("Invalid input for end time");
+                }
+            } while (!validTime(ehour, eminute));
+            validEnd = true; 
+        } catch (const invalid_argument& e) {
+            cerr << "Error: " << e.what() << ". Please enter the end time again." << endl;
+        }
+    }
 
         setStartTime(shour, sminute);
         setEndTime(ehour, eminute);
