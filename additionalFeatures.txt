@@ -1,4 +1,0 @@
-#include <termios.h> to disable echoing of input characters. ( for password )
-need to check whether the previous username exist. (if exist need to change to a new one)
-
-

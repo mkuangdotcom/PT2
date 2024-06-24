@@ -82,8 +82,8 @@ class FavM: public Music{
     string getType(int i) {return typeF;}
 
     void dispClist(){
-            Music::dispClist();
-            cout << "Type: " << typeF << endl;
+        Music::dispClist();
+        cout << "Type: " << typeF << endl;
     }
 };
 
