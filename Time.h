@@ -66,7 +66,7 @@ void Time::dailySleepTime(int _day) {
         int shour, sminute, ehour, eminute;
         cout << "Day " << (i + 1) << ": " << endl;
 
-            bool validStart = false;
+    bool validStart = false;
     while (!validStart) {
         try {
             do {
