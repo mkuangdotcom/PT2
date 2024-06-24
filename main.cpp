@@ -9,15 +9,15 @@
 #include <string>
 #include <cmath>
 #include <iomanip>
-#include <fstream>  // To store data in a file
-#include <map>      // STL map
+#include <fstream>  
+#include <map>      
 #include <exception>
 #include <stdexcept>
-#include <unistd.h>     // For sleep function
+#include <unistd.h>     
 #include <vector>
 using namespace std;
 
-// Function Prototypes
+
 void mainMenu(NewUser&);
 void Quit();
 
@@ -258,39 +258,39 @@ void loadMusic(){
 
     if (!inFile) {
         cout << "Unable to open file musicList.txt";
-        exit(1);   // call system to stop
+        exit(1);   
     }
 
-    int i=0;
-    for(int i=0;i<100;i++){             // Input list of name and url link from musicList.txt
-        if(i%3==0){
+    int i = 0;
+    for(int i = 0; i < 100; i++){             
+        if(i % 3 == 0){
             list = "";
             getline(inFile, list);            
         }
 
-        else if(i%3==1){ 
+        else if(i % 3 == 1){ 
             url = "";
             getline(inFile, url);
         }
             
         else{
-            if(i<30){                          
-                composer="";
-                getline(inFile,composer);        // Input composer from file
-                cm.push_back(ClassicM(list,url,composer));  // Create an object for each classical music
+            if(i < 30){                          
+                composer =  "";
+                getline(inFile,composer);        
+                cm.push_back(ClassicM(list,url,composer));  
             }
 
-            else if(i<60 && i>=30){
+            else if(i < 60 && i >= 30){
                 typeW="";
-                getline(inFile,typeW);          // Input type of White Noise from file
-                wn.push_back(WhiteNoise(list,url,typeW));  // Create object for each white Noise 
+                getline(inFile,typeW);          
+                wn.push_back(WhiteNoise(list,url,typeW));  
             }
 
-            if(i<210 && i>=60){
+            if(i < 210 && i >= 60){
                 typeF="";
-                getline(inFile,typeF);          // Input type of user defined music
+                getline(inFile,typeF);          
                 if(!typeF.empty())
-                fm.push_back(FavM(list,url,typeF));        // Create object for each user defined music
+                fm.push_back(FavM(list,url,typeF));        
 
                 else
                     break;
@@ -298,16 +298,16 @@ void loadMusic(){
         }
     }
 
-    for(int i=0;i<cm.size();i++){
-        if (i==0)
+    for(int i = 0;i < cm.size(); i++){
+        if (i == 0)
             cout << "Classical Music: \n";
 
         cout << setw(3) << left << i+1;
         cm[i].dispClist();
     }
 
-    for(int i=0;i<wn.size();i++){
-        if(i==0)
+    for(int i = 0;i < wn.size(); i++){
+        if(i == 0)
             cout << "\nWhite Noise: \n";
 
         cout << setw(3) << left << i+1;
@@ -324,7 +324,7 @@ void loadMusic(){
     }
     cout << endl;
 
-    if (fm.size()<1){
+    if (fm.size() < 1){
             cout << "\nUser Defined Music: \n";
             cout << "!!!Doesn't have any User Defined Music!!!\n";
     }
@@ -413,7 +413,6 @@ int main() {
     char gender;
     double height, weight;
 
-    // Map to store all users
     map<string, NewUser> users;        
 
     ifstream inFile("users.txt");

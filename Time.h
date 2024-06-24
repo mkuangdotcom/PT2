@@ -11,12 +11,17 @@ class Time {
         int shour, sminute, ehour, eminute;
         int averageSleepMinutes;
         int day;
-        int startTimes[30][2] = {0}; 
-        int endTimes[30][2] = {0};
+        int startTimes[30][2]; 
+        int endTimes[30][2]; 
 
 
     public:
-        Time(int _shour = 0, int _sminute = 0, int _ehour = 0, int _eminute = 0, int _day = 0) : shour(_shour), sminute(_sminute), ehour(_ehour), eminute(_eminute), day(_day) { };
+        Time(int _shour = 0, int _sminute = 0, int _ehour = 0, int _eminute = 0, int _day = 0) : shour(_shour), sminute(_sminute), ehour(_ehour), eminute(_eminute), day(_day) {
+            for (int i = 0; i < 30; ++i) {
+            startTimes[i][0] = 0; startTimes[i][1] = 0;
+            endTimes[i][0] = 0; endTimes[i][1] = 0;
+            }
+        }
 
         friend bool validDate(int day, int month, int year);
         friend bool validEdate(int eday, int emonth, int eyear, int sday, int smonth, int syear);
