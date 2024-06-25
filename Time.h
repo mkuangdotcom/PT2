@@ -2,6 +2,7 @@
 #include <iostream>
 #include <string>
 #include <exception>
+#include <limits>
 using namespace std;
 
 #ifndef TIME_H  

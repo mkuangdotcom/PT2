@@ -29,15 +29,15 @@ class Data {
 
 void Data::analyzeSleep(int minutes, int age) {
         if (age < 1) {
-            if (minutes < 14*60) {
+            if (minutes < 12*60) {
                 category = 'B';
-            } else if (minutes > 15*60) {
+            } else if (minutes > 16*60) {
                 category = 'C';
             } else {
                 category = 'A';
             }
         } else if (age < 3) {
-            if (minutes < 12*60) {
+            if (minutes < 11*60) {
                 category = 'B';
             } else if (minutes > 14*60) {
                 category = 'C';
@@ -47,7 +47,7 @@ void Data::analyzeSleep(int minutes, int age) {
         } else if (age < 6) {
             if (minutes < 10*60) {
                 category = 'B';
-            } else if (minutes > 12*60) {
+            } else if (minutes > 13*60) {
                 category = 'C';
             } else {
                 category = 'A';
@@ -55,7 +55,7 @@ void Data::analyzeSleep(int minutes, int age) {
         } else if (age < 13) {
             if (minutes < 9*60) {
                 category = 'B';
-            } else if (minutes > 10*60) {
+            } else if (minutes > 12*60) {
                 category = 'C';
             } else {
                 category = 'A';
@@ -63,20 +63,12 @@ void Data::analyzeSleep(int minutes, int age) {
         } else if (age < 18) {
             if (minutes < 8*60) {
                 category = 'B';
-            } else if (minutes > 9*60) {
+            } else if (minutes > 10*60) {
                 category = 'C';
             } else {
                 category = 'A';
             }
-        } else if (age < 65) {
-            if (minutes < 7*60) {
-                category = 'B';
-            } else if (minutes > 8*60) {
-                category = 'C';
-            } else {
-                category = 'A';
-            }
-        } else {
+        } else if (age >= 65) {
             if (minutes < 7*60) {
                 category = 'B';
             } else if (minutes > 8*60) {
@@ -107,15 +99,15 @@ void Data::displayMessage() {
 void Data::calculateSleepDiff(int averageTime, int age) {
     int averageSleepForAgeGroup;
     if (age < 1) {
-        averageSleepForAgeGroup = 14.5*60; 
+        averageSleepForAgeGroup = 14*60; 
     } else if (age < 3) {
-        averageSleepForAgeGroup = 13*60; 
+        averageSleepForAgeGroup = 12.5*60; 
     } else if (age < 6) {
-        averageSleepForAgeGroup = 11*60;
+        averageSleepForAgeGroup = 11.5*60;
     } else if (age < 13) {
-        averageSleepForAgeGroup = 9.5*60; 
+        averageSleepForAgeGroup = 10.5*60; 
     } else if (age < 18) {
-        averageSleepForAgeGroup = 8.5*60; 
+        averageSleepForAgeGroup = 9*60; 
     } else {
         averageSleepForAgeGroup = 7.5*60; 
     }
